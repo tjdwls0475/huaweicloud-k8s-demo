@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: fastapi-config
+data:
+  DEBUG: "true"
+  LOG_LEVEL: "info"
+  PROJECT_NAME: "fastapi-20240205-01"
