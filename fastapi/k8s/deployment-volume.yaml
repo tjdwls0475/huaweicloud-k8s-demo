@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fastapi-20240205
+  labels:
+    app: fastapi
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: fastapi
+  template:
+    metadata:
+      labels:
+        app: fastapi
+    spec:
+      containers:
+      - name: fastapi
+        image: swr.ap-southeast-3.myhuaweicloud.com/harry-swr/fastapi:0.4
+        imagePullPolicy: Always # 필수
+        resources: # 필수
+          limits:
+            cpu: 1000m
+            memory: 2048Mi
+          requests:
+            cpu: 1000m
+            memory: 2048Mi
+        ports:
+        - containerPort: 80
+        volumeMounts:
+          - name: config-volume
+            mountPath: "/config"
+      imagePullSecrets: # 필수
+        - name: imagepull-secret
+      volumes:
+        - name: config-volume
+          configMap:
+            name: fastapi-config
